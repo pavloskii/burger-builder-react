@@ -147,7 +147,7 @@ class ContactData extends Component {
 
         if (rules.isNumeric) {
             const pattern = /^\d+$/;
-            isValid = pattern.test(value) && isValid;
+            isValid = pattern.test(value) && isValid; 
         }
 
         return isValid;
