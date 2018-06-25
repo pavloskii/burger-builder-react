@@ -83,18 +83,20 @@ export const authCheckState = () => {
     return dispatch => {
         const token = localStorage.getItem('token');
         if (!token) {
+            console.log('Falsy TOKEN')
             dispatch(logout());
             return;
         }
 
-        const expiratinDate = localStorage.getItem('expirationDate');
-        if (expiratinDate > new Date()) {
+        const expiratinDate = new Date(localStorage.getItem('expirationDate'));
+        if (expiratinDate <= new Date()) {
+            console.log('Falsy expiration date')
             dispatch(logout());
             return;
         }
-
+        console.log('all ok in auto auth')
         const userId = localStorage.getItem('userId')
         dispatch(authSuccess(token, userId));
-        dispatch(checkAuthTimeout(expiratinDate.getSeconds() - new Date().getSeconds()));
+        dispatch(checkAuthTimeout((expiratinDate.getTime() - new Date().getTime()) / 1000));
     }
 }
